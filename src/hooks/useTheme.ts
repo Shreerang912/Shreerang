@@ -1,14 +1,14 @@
 import { useState, useEffect, useCallback } from 'react';
 
-export type Theme = 'aeronautical' | 'dark' | 'light' | 'midnight' | 'amoled' | 'cyberpunk' | 'forest';
+export type Theme = 'space' | 'dark' | 'light' | 'midnight' | 'amoled' | 'cyberpunk' | 'forest';
 
-export const THEMES: Theme[] = ['aeronautical', 'dark', 'light', 'midnight', 'amoled', 'cyberpunk', 'forest'];
+export const THEMES: Theme[] = ['space', 'dark', 'light', 'midnight', 'amoled', 'cyberpunk', 'forest'];
 const STORAGE_KEY = 'portfolio-theme';
 
 export const useTheme = () => {
   const [theme, setTheme] = useState<Theme>(() => {
-    if (typeof window === 'undefined') return 'aeronautical';
-    return (localStorage.getItem(STORAGE_KEY) as Theme) ?? 'aeronautical';
+    if (typeof window === 'undefined') return 'space';
+    return (localStorage.getItem(STORAGE_KEY) as Theme) ?? 'space';
   });
 
   useEffect(() => {

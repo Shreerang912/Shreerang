@@ -53,6 +53,9 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                 <div>
                   <h4 className="text-sm font-medium text-foreground mb-2 uppercase tracking-wider">Overview</h4>
                   <p className="text-muted leading-relaxed">{project.description}</p>
+                  {project.note && (
+                    <p className="text-xs text-muted mt-2 italic">{project.note}</p>
+                  )}
                 </div>
 
                 <div>
@@ -69,9 +72,9 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                   </div>
                 </div>
 
-                {(project.links?.live || project.links?.source) && (
-                  <div className="pt-4 flex gap-4 border-t border-border">
-                    {project.links.live && (
+                {(project.links?.live || project.links?.source || project.repo || project.links?.construct) && (
+                  <div className="pt-4 flex flex-wrap gap-4 border-t border-border">
+                    {project.links?.live && (
                       <a
                         href={project.links.live}
                         target="_blank"
@@ -82,15 +85,29 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                         Live Demo
                       </a>
                     )}
-                    {project.links.source && (
+                    {(project.links?.source || project.repo) && (
                       <a
-                        href={project.links.source}
+                        href={project.links?.source || project.repo}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center gap-2 text-sm font-medium text-foreground hover:text-accent transition-colors"
                       >
                         <Github className="w-4 h-4" />
-                        Source Code
+                        View Repository
+                      </a>
+                    )}
+                    {project.links?.construct && (
+                      <a
+                        href={project.links.construct}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="View Construct Dashboard"
+                        className="flex items-center gap-2 text-sm font-medium text-foreground hover:text-accent transition-colors"
+                      >
+                        <svg className="w-4 h-4" viewBox="0 0 256 256" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M128 0c70.7 0 128 57.3 128 128s-57.3 128-128 128S0 198.7 0 128 57.3 0 128 0zm0 42.7c-47.1 0-85.3 38.2-85.3 85.3s38.2 85.3 85.3 85.3 85.3-38.2 85.3-85.3-38.2-85.3-85.3-85.3zm-32 42.6h21.3v32h21.4v-32h21.3v85.4h-21.3v-32h-21.4v32H96V85.3z"/>
+                        </svg>
+                        View Construct Dashboard
                       </a>
                     )}
                   </div>

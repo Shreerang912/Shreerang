@@ -61,8 +61,13 @@ export function ProjectCard({ project, onClick }: ProjectCardProps) {
         "hover:border-accent hover:shadow-md"
       )}
     >
-      <motion.div layoutId={`project-title-${project.id}`} className="mb-2">
+      <motion.div layoutId={`project-title-${project.id}`} className="mb-2 flex items-center justify-between gap-2">
         <h3 className="text-xl font-medium text-foreground">{project.title}</h3>
+        {project.status === 'in-progress' && (
+          <span className="shrink-0 px-2 py-0.5 text-[10px] uppercase tracking-wider font-semibold rounded-full bg-accent/10 text-accent border border-accent/20">
+            In Progress
+          </span>
+        )}
       </motion.div>
       <motion.div layoutId={`project-tagline-${project.id}`}>
         <p className="text-muted text-sm">{project.tagline}</p>

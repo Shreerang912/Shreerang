@@ -8,6 +8,7 @@ import { PageWrapper } from '@/components/layout/PageWrapper';
 import { SpotlightGradient } from '@/components/home/SpotlightGradient';
 import { BackgroundGrid } from '@/components/home/BackgroundGrid';
 import { ParticleBackground } from '@/components/home/ParticleBackground';
+import { SpaceEasterEgg } from '@/components/home/SpaceEasterEgg';
 import { FloatingContactBar } from '@/components/contact/FloatingContactBar';
 
 import { Home } from '@/pages/Home';
@@ -50,6 +51,7 @@ function AppContent() {
     <div className="relative min-h-screen bg-background text-foreground overflow-x-hidden selection:bg-accent selection:text-background">
       <BackgroundGrid />
       <ParticleBackground />
+      <SpaceEasterEgg />
       <SpotlightGradient />
       
       <FloatingNav />

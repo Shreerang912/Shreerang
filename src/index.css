@@ -24,7 +24,7 @@
 }
 
 @layer base {
-  :root, [data-theme="aeronautical"] {
+  :root, [data-theme="space"] {
     --background: #0a0e14;
     --surface: #0f1520;
     --border: #1e3a5f;
@@ -120,22 +120,22 @@
   }
 
   [data-theme="cyberpunk"] {
-    --background: #06080c;
-    --surface: #0c1018;
-    --border: #0d2a1f;
-    --foreground: #b0ffcc;
-    --muted: #2a6644;
-    --accent: #00ff88;
-    --accent-subtle: rgba(0, 255, 136, 0.15);
-    --spotlight: rgba(0, 255, 136, 0.08);
-    --grid: rgba(0, 255, 136, 0.06);
-    --particle: rgba(0, 255, 136, 0.4);
-    --chart-line: #00ff88;
-    --chart-fill: rgba(0, 255, 136, 0.15);
-    --skill-card-bg: #0c1018;
-    --skill-pill-bg: #061a12;
-    --skill-pill-border: #0d2a1f;
-    --nav-bg: rgba(6, 8, 12, 0.75);
+    --background: #0D0E15;
+    --surface: #151721;
+    --border: #00f0ff;
+    --foreground: #e2e8f0;
+    --muted: #ff003c;
+    --accent: #fcee0a;
+    --accent-subtle: rgba(252, 238, 10, 0.15);
+    --spotlight: rgba(0, 240, 255, 0.1);
+    --grid: rgba(255, 0, 60, 0.05);
+    --particle: rgba(0, 240, 255, 0.4);
+    --chart-line: #fcee0a;
+    --chart-fill: rgba(252, 238, 10, 0.15);
+    --skill-card-bg: #151721;
+    --skill-pill-bg: #1f0010;
+    --skill-pill-border: #ff003c;
+    --nav-bg: rgba(13, 14, 21, 0.75);
   }
 
   [data-theme="forest"] {
@@ -168,7 +168,7 @@
 }
 
 /* Theme specific skill card styles */
-[data-theme="aeronautical"] .skill-card {
+[data-theme="space"] .skill-card {
   @apply border-border border border-dashed;
   background-image: linear-gradient(0deg, transparent 24%, rgba(74, 158, 255, 0.03) 25%, rgba(74, 158, 255, 0.03) 26%, transparent 27%, transparent 74%, rgba(74, 158, 255, 0.03) 75%, rgba(74, 158, 255, 0.03) 76%, transparent 77%, transparent);
   background-size: 50px 50px;
@@ -196,10 +196,15 @@
   @apply border-border border transition-all duration-300;
 }
 [data-theme="cyberpunk"] .skill-card:hover {
-  @apply border-accent;
-  box-shadow: 0 0 8px var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 12px var(--accent-subtle), inset 0 0 8px rgba(255, 0, 60, 0.2);
 }
 [data-theme="forest"] .skill-card {
   @apply border-border border;
+}
+
+@keyframes twinkle {
+  0% { opacity: 0.1; transform: scale(0.8); }
+  100% { opacity: 0.8; transform: scale(1.2); box-shadow: 0 0 4px rgba(255,255,255,0.8); }
 }
 

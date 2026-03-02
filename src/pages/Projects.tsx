@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils';
 const CATEGORIES: { id: ProjectCategory | 'all'; label: string }[] = [
   { id: 'all', label: 'All' },
   { id: 'hardware', label: 'Hardware' },
+  { id: 'software', label: 'Software' },
   { id: 'android', label: 'Android' },
   { id: 'python', label: 'Python' },
   { id: 'cad', label: 'CAD' },
