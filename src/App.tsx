@@ -9,6 +9,7 @@ import { SpotlightGradient } from '@/components/home/SpotlightGradient';
 import { BackgroundGrid } from '@/components/home/BackgroundGrid';
 import { ParticleBackground } from '@/components/home/ParticleBackground';
 import { SpaceEasterEgg } from '@/components/home/SpaceEasterEgg';
+import { ClickSpark } from '@/components/animations/ClickSpark';
 import { FloatingContactBar } from '@/components/contact/FloatingContactBar';
 
 import { Home } from '@/pages/Home';
@@ -49,6 +50,7 @@ function AppContent() {
 
   return (
     <div className="relative min-h-screen bg-background text-foreground overflow-x-hidden selection:bg-accent selection:text-background">
+      <ClickSpark />
       <BackgroundGrid />
       <ParticleBackground />
       <SpaceEasterEgg />

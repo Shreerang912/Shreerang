@@ -27,18 +27,12 @@ export function SpaceEasterEgg() {
     <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
       {/* Moon */}
       <div 
-        className="absolute top-24 right-[10%] w-32 h-32 rounded-full bg-slate-200 transition-all duration-1000"
+        className="absolute top-24 right-[10%] w-16 h-16 rounded-full"
         style={{
-          boxShadow: '0 0 60px 10px rgba(255, 255, 255, 0.15), inset -10px -10px 20px rgba(0,0,0,0.3)',
-          background: 'radial-gradient(circle at 30% 30%, #ffffff, #cbd5e1)'
+          boxShadow: 'inset -12px -8px 0 2px #cbd5e1',
+          filter: 'drop-shadow(0 0 10px rgba(255, 255, 255, 0.2))'
         }}
-      >
-        {/* Craters */}
-        <div className="absolute top-6 left-6 w-6 h-6 rounded-full bg-slate-400/30 shadow-inner" />
-        <div className="absolute top-12 left-16 w-8 h-8 rounded-full bg-slate-400/20 shadow-inner" />
-        <div className="absolute bottom-8 left-10 w-4 h-4 rounded-full bg-slate-400/30 shadow-inner" />
-        <div className="absolute top-8 right-8 w-3 h-3 rounded-full bg-slate-400/20 shadow-inner" />
-      </div>
+      />
 
       {/* Twinkling Stars */}
       {!reducedMotion && stars.map(star => (

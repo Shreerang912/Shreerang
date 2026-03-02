@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'motion/react';
+import { VariableProximity } from '@/components/animations/VariableProximity';
 
 export function HeroName() {
   const [hovered, setHovered] = useState(false);
@@ -10,7 +11,7 @@ export function HeroName() {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      Shreerang Bhavsar
+      <VariableProximity text="Shreerang Bhavsar" radius={70} falloff="gaussian" />
       <motion.span
         initial={{ opacity: 0, x: -4 }}
         animate={{ opacity: hovered ? 1 : 0, x: hovered ? 0 : -4 }}

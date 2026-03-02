@@ -1,4 +1,6 @@
-import { Mail, Hash } from 'lucide-react';
+import { Mail, Hash, Github } from 'lucide-react';
+import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
+import { useRef } from 'react';
 
 function DiscordIcon({ className }: { className?: string }) {
   return (
@@ -8,34 +10,76 @@ function DiscordIcon({ className }: { className?: string }) {
   );
 }
 
-export function ContactButtons() {
+function DockItem({ children, mouseX }: { children: React.ReactNode, mouseX: any }) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  const distance = useTransform(mouseX, (val: number) => {
+    const bounds = ref.current?.getBoundingClientRect() ?? { x: 0, width: 0 };
+    return val - bounds.x - bounds.width / 2;
+  });
+
+  // Scale from 1 to 1.15 based on distance
+  const scaleSync = useTransform(distance, [-200, 0, 200], [1, 1.15, 1]);
+  const scale = useSpring(scaleSync, { mass: 0.1, stiffness: 150, damping: 12 });
+
   return (
-    <div className="flex flex-col sm:flex-row gap-4">
-      <a
-        href="mailto:shreerangbhavsar912@gmail.com"
-        className="flex items-center justify-center gap-3 px-6 py-4 rounded-xl bg-surface border border-border hover:border-accent hover:text-accent transition-colors group"
-      >
-        <Mail className="w-5 h-5 text-muted group-hover:text-accent transition-colors" />
-        <span className="font-medium">Email</span>
-      </a>
-      <a
-        href="https://discord.com/users/913741347456970752"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex items-center justify-center gap-3 px-6 py-4 rounded-xl bg-surface border border-border hover:border-accent hover:text-accent transition-colors group"
-      >
-        <DiscordIcon className="w-5 h-5 text-muted group-hover:text-accent transition-colors" />
-        <span className="font-medium">Discord</span>
-      </a>
-      <a
-        href="https://hackclub.enterprise.slack.com/team/U0AEP2DSQ11"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex items-center justify-center gap-3 px-6 py-4 rounded-xl bg-surface border border-border hover:border-accent hover:text-accent transition-colors group"
-      >
-        <Hash className="w-5 h-5 text-muted group-hover:text-accent transition-colors" />
-        <span className="font-medium">Slack</span>
-      </a>
+    <motion.div ref={ref} style={{ scale }} className="origin-bottom w-full sm:w-auto">
+      {children}
+    </motion.div>
+  );
+}
+
+export function ContactButtons() {
+  const mouseX = useMotionValue(Infinity);
+
+  return (
+    <div 
+      className="flex flex-col sm:flex-row gap-4"
+      onMouseMove={(e) => mouseX.set(e.pageX)}
+      onMouseLeave={() => mouseX.set(Infinity)}
+    >
+      <DockItem mouseX={mouseX}>
+        <a
+          href="mailto:shreerangbhavsar912@gmail.com"
+          className="flex items-center justify-center gap-3 px-6 py-4 rounded-xl bg-surface border border-border hover:border-accent hover:text-accent transition-colors group w-full"
+        >
+          <Mail className="w-5 h-5 text-muted group-hover:text-accent transition-colors" />
+          <span className="font-medium">Email</span>
+        </a>
+      </DockItem>
+      <DockItem mouseX={mouseX}>
+        <a
+          href="https://discord.com/users/913741347456970752"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center justify-center gap-3 px-6 py-4 rounded-xl bg-surface border border-border hover:border-accent hover:text-accent transition-colors group w-full"
+        >
+          <DiscordIcon className="w-5 h-5 text-muted group-hover:text-accent transition-colors" />
+          <span className="font-medium">Discord</span>
+        </a>
+      </DockItem>
+      <DockItem mouseX={mouseX}>
+        <a
+          href="https://hackclub.enterprise.slack.com/team/U0AEP2DSQ11"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center justify-center gap-3 px-6 py-4 rounded-xl bg-surface border border-border hover:border-accent hover:text-accent transition-colors group w-full"
+        >
+          <Hash className="w-5 h-5 text-muted group-hover:text-accent transition-colors" />
+          <span className="font-medium">Slack</span>
+        </a>
+      </DockItem>
+      <DockItem mouseX={mouseX}>
+        <a
+          href="https://github.com/Shreerang912"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center justify-center gap-3 px-6 py-4 rounded-xl bg-surface border border-border hover:border-accent hover:text-accent transition-colors group w-full"
+        >
+          <Github className="w-5 h-5 text-muted group-hover:text-accent transition-colors" />
+          <span className="font-medium">GitHub</span>
+        </a>
+      </DockItem>
     </div>
   );
 }

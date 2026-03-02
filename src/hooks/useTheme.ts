@@ -32,9 +32,14 @@ export const useTheme = () => {
   const setTheme = useCallback((newTheme: Theme | ((prev: Theme) => Theme)) => {
     setThemeState(prev => {
       const nextTheme = typeof newTheme === 'function' ? newTheme(prev) : newTheme;
-      localStorage.setItem(STORAGE_KEY, nextTheme);
-      document.documentElement.setAttribute('data-theme', nextTheme);
-      window.dispatchEvent(new CustomEvent('theme-change', { detail: nextTheme }));
+      if (prev !== nextTheme) {
+        // Defer side effects to avoid dispatching events during React render phase
+        queueMicrotask(() => {
+          localStorage.setItem(STORAGE_KEY, nextTheme);
+          document.documentElement.setAttribute('data-theme', nextTheme);
+          window.dispatchEvent(new CustomEvent('theme-change', { detail: nextTheme }));
+        });
+      }
       return nextTheme;
     });
   }, []);

@@ -14,7 +14,7 @@ export function ParticleBackground() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let particles: { x: number; y: number; vx: number; vy: number; radius: number }[] = [];
+    let particles: { x: number; y: number; vx: number; vy: number; radius: number; alpha: number }[] = [];
     let animationFrameId: number;
 
     const resize = () => {
@@ -25,14 +25,19 @@ export function ParticleBackground() {
 
     const initParticles = () => {
       particles = [];
-      const numParticles = Math.floor((canvas.width * canvas.height) / 20000);
+      // particleSpread=15 (used to determine density, let's say 1 particle per 15x15 area roughly, or just a multiplier for count)
+      const numParticles = Math.floor((canvas.width * canvas.height) / (15 * 15 * 100)); // Adjusted for reasonable density
       for (let i = 0; i < numParticles; i++) {
+        // speed=0.09
+        const speed = 0.09;
+        const angle = Math.random() * Math.PI * 2;
         particles.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
-          vx: (Math.random() - 0.5) * 0.5,
-          vy: (Math.random() - 0.5) * 0.5,
-          radius: Math.random() * 1.5 + 0.5,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          radius: Math.random() * 2 + 1,
+          alpha: Math.random() * 0.5 + 0.1, // alphaParticles=true
         });
       }
     };
@@ -42,7 +47,7 @@ export function ParticleBackground() {
       
       // Get particle color from CSS variable
       const style = getComputedStyle(document.documentElement);
-      const particleColor = style.getPropertyValue('--particle').trim() || 'rgba(255, 255, 255, 0.2)';
+      const particleColor = style.getPropertyValue('--particle').trim() || 'rgba(255, 255, 255, 0.5)';
       
       ctx.fillStyle = particleColor;
 
@@ -55,10 +60,13 @@ export function ParticleBackground() {
         if (p.y < 0) p.y = canvas.height;
         if (p.y > canvas.height) p.y = 0;
 
+        ctx.globalAlpha = p.alpha;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx.fill();
       });
+      
+      ctx.globalAlpha = 1.0;
 
       animationFrameId = requestAnimationFrame(draw);
     };

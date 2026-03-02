@@ -1,6 +1,7 @@
-import { Mail, Hash } from 'lucide-react';
+import { Mail, Hash, Github } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'motion/react';
+import { useRef } from 'react';
 
 function DiscordIcon({ className }: { className?: string }) {
   return (
@@ -10,44 +11,83 @@ function DiscordIcon({ className }: { className?: string }) {
   );
 }
 
+function DockItem({ children, mouseY }: { children: React.ReactNode, mouseY: any }) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  const distance = useTransform(mouseY, (val: number) => {
+    const bounds = ref.current?.getBoundingClientRect() ?? { y: 0, height: 0 };
+    return val - bounds.y - bounds.height / 2;
+  });
+
+  // Scale from 1 to 1.3 based on distance
+  const scaleSync = useTransform(distance, [-150, 0, 150], [1, 1.3, 1]);
+  const scale = useSpring(scaleSync, { mass: 0.1, stiffness: 150, damping: 12 });
+
+  return (
+    <motion.div ref={ref} style={{ scale }} className="origin-right">
+      {children}
+    </motion.div>
+  );
+}
+
 export function FloatingContactBar() {
   const location = useLocation();
   const isContactPage = location.pathname === '/contact';
+  const mouseY = useMotionValue(Infinity);
 
   return (
     <AnimatePresence>
       {!isContactPage && (
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: 20 }}
           className="fixed bottom-6 right-6 z-40 hidden md:flex flex-col gap-3"
+          onMouseMove={(e) => mouseY.set(e.pageY)}
+          onMouseLeave={() => mouseY.set(Infinity)}
         >
-          <a
-            href="mailto:shreerangbhavsar912@gmail.com"
-            className="p-3 rounded-full bg-surface border border-border text-muted hover:text-accent hover:border-accent shadow-sm transition-colors"
-            aria-label="Email"
-          >
-            <Mail className="w-5 h-5" />
-          </a>
-          <a
-            href="https://discord.com/users/913741347456970752"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-3 rounded-full bg-surface border border-border text-muted hover:text-accent hover:border-accent shadow-sm transition-colors"
-            aria-label="Discord"
-          >
-            <DiscordIcon className="w-5 h-5" />
-          </a>
-          <a
-            href="https://hackclub.enterprise.slack.com/team/U0AEP2DSQ11"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-3 rounded-full bg-surface border border-border text-muted hover:text-accent hover:border-accent shadow-sm transition-colors"
-            aria-label="Slack"
-          >
-            <Hash className="w-5 h-5" />
-          </a>
+          <DockItem mouseY={mouseY}>
+            <a
+              href="mailto:shreerangbhavsar912@gmail.com"
+              className="p-3 block rounded-full bg-surface border border-border text-muted hover:text-accent hover:border-accent shadow-sm transition-colors"
+              aria-label="Email"
+            >
+              <Mail className="w-5 h-5" />
+            </a>
+          </DockItem>
+          <DockItem mouseY={mouseY}>
+            <a
+              href="https://discord.com/users/913741347456970752"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-3 block rounded-full bg-surface border border-border text-muted hover:text-accent hover:border-accent shadow-sm transition-colors"
+              aria-label="Discord"
+            >
+              <DiscordIcon className="w-5 h-5" />
+            </a>
+          </DockItem>
+          <DockItem mouseY={mouseY}>
+            <a
+              href="https://hackclub.enterprise.slack.com/team/U0AEP2DSQ11"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-3 block rounded-full bg-surface border border-border text-muted hover:text-accent hover:border-accent shadow-sm transition-colors"
+              aria-label="Slack"
+            >
+              <Hash className="w-5 h-5" />
+            </a>
+          </DockItem>
+          <DockItem mouseY={mouseY}>
+            <a
+              href="https://github.com/Shreerang912"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-3 block rounded-full bg-surface border border-border text-muted hover:text-accent hover:border-accent shadow-sm transition-colors"
+              aria-label="GitHub"
+            >
+              <Github className="w-5 h-5" />
+            </a>
+          </DockItem>
         </motion.div>
       )}
     </AnimatePresence>
