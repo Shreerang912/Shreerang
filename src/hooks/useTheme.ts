@@ -6,14 +6,42 @@ export const THEMES: Theme[] = ['space', 'dark', 'light', 'midnight', 'amoled', 
 const STORAGE_KEY = 'portfolio-theme';
 
 export const useTheme = () => {
-  const [theme, setTheme] = useState<Theme>(() => {
+  const [theme, setThemeState] = useState<Theme>(() => {
     if (typeof window === 'undefined') return 'space';
-    return (localStorage.getItem(STORAGE_KEY) as Theme) ?? 'space';
+    let saved = localStorage.getItem(STORAGE_KEY);
+    
+    // Migrate old 'aeronautical' theme to 'space'
+    if (saved === 'aeronautical') {
+      saved = 'space';
+      localStorage.setItem(STORAGE_KEY, 'space');
+    }
+    
+    return THEMES.includes(saved as Theme) ? (saved as Theme) : 'space';
   });
 
+  // Listen for theme changes from other components
+  useEffect(() => {
+    const handleThemeChange = (e: Event) => {
+      const customEvent = e as CustomEvent<Theme>;
+      setThemeState(customEvent.detail);
+    };
+    window.addEventListener('theme-change', handleThemeChange);
+    return () => window.removeEventListener('theme-change', handleThemeChange);
+  }, []);
+
+  const setTheme = useCallback((newTheme: Theme | ((prev: Theme) => Theme)) => {
+    setThemeState(prev => {
+      const nextTheme = typeof newTheme === 'function' ? newTheme(prev) : newTheme;
+      localStorage.setItem(STORAGE_KEY, nextTheme);
+      document.documentElement.setAttribute('data-theme', nextTheme);
+      window.dispatchEvent(new CustomEvent('theme-change', { detail: nextTheme }));
+      return nextTheme;
+    });
+  }, []);
+
+  // Ensure document attribute is set on initial load
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem(STORAGE_KEY, theme);
   }, [theme]);
 
   const cycleTheme = useCallback((reverse = false) => {
@@ -24,7 +52,7 @@ export const useTheme = () => {
         : (idx + 1) % THEMES.length;
       return THEMES[next];
     });
-  }, []);
+  }, [setTheme]);
 
   return { theme, setTheme, cycleTheme };
 };
