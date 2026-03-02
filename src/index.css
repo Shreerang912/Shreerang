@@ -1,0 +1,205 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-border: var(--border);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-subtle: var(--accent-subtle);
+  --color-spotlight: var(--spotlight);
+  --color-grid: var(--grid);
+  --color-particle: var(--particle);
+  --color-chart-line: var(--chart-line);
+  --color-chart-fill: var(--chart-fill);
+  --color-skill-card-bg: var(--skill-card-bg);
+  --color-skill-pill-bg: var(--skill-pill-bg);
+  --color-skill-pill-border: var(--skill-pill-border);
+  --color-nav-bg: var(--nav-bg);
+}
+
+@layer base {
+  :root, [data-theme="aeronautical"] {
+    --background: #0a0e14;
+    --surface: #0f1520;
+    --border: #1e3a5f;
+    --foreground: #c8d8e8;
+    --muted: #5a7a9a;
+    --accent: #4a9eff;
+    --accent-subtle: rgba(74, 158, 255, 0.12);
+    --spotlight: rgba(74, 158, 255, 0.08);
+    --grid: rgba(74, 158, 255, 0.06);
+    --particle: rgba(74, 158, 255, 0.4);
+    --chart-line: #4a9eff;
+    --chart-fill: rgba(74, 158, 255, 0.15);
+    --skill-card-bg: #0f1a2a;
+    --skill-pill-bg: #0d1e33;
+    --skill-pill-border: #1e3a5f;
+    --nav-bg: rgba(10, 14, 20, 0.75);
+  }
+
+  [data-theme="dark"] {
+    --background: #111111;
+    --surface: #1a1a1a;
+    --border: #2a2a2a;
+    --foreground: #e5e5e5;
+    --muted: #666666;
+    --accent: #ffffff;
+    --accent-subtle: rgba(255, 255, 255, 0.1);
+    --spotlight: rgba(255, 255, 255, 0.05);
+    --grid: rgba(255, 255, 255, 0.03);
+    --particle: rgba(255, 255, 255, 0.2);
+    --chart-line: #ffffff;
+    --chart-fill: rgba(255, 255, 255, 0.1);
+    --skill-card-bg: #1a1a1a;
+    --skill-pill-bg: #222222;
+    --skill-pill-border: #333333;
+    --nav-bg: rgba(17, 17, 17, 0.75);
+  }
+
+  [data-theme="light"] {
+    --background: #f8f8f7;
+    --surface: #ffffff;
+    --border: #e0e0dc;
+    --foreground: #1a1a18;
+    --muted: #888884;
+    --accent: #1a1a18;
+    --accent-subtle: rgba(26, 26, 24, 0.05);
+    --spotlight: rgba(26, 26, 24, 0.03);
+    --grid: rgba(26, 26, 24, 0.05);
+    --particle: rgba(26, 26, 24, 0.2);
+    --chart-line: #1a1a18;
+    --chart-fill: rgba(26, 26, 24, 0.05);
+    --skill-card-bg: #ffffff;
+    --skill-pill-bg: #f0f0ef;
+    --skill-pill-border: #e0e0dc;
+    --nav-bg: rgba(248, 248, 247, 0.75);
+  }
+
+  [data-theme="midnight"] {
+    --background: #060b18;
+    --surface: #0b1228;
+    --border: #162040;
+    --foreground: #d0daf0;
+    --muted: #4a5c80;
+    --accent: #6b9fff;
+    --accent-subtle: rgba(107, 159, 255, 0.15);
+    --spotlight: rgba(107, 159, 255, 0.08);
+    --grid: rgba(107, 159, 255, 0.06);
+    --particle: rgba(107, 159, 255, 0.3);
+    --chart-line: #6b9fff;
+    --chart-fill: rgba(107, 159, 255, 0.15);
+    --skill-card-bg: #0b1228;
+    --skill-pill-bg: #111b38;
+    --skill-pill-border: #162040;
+    --nav-bg: rgba(6, 11, 24, 0.75);
+  }
+
+  [data-theme="amoled"] {
+    --background: #000000;
+    --surface: #0d0d0d;
+    --border: #1f1f1f;
+    --foreground: #ffffff;
+    --muted: #555555;
+    --accent: #ffffff;
+    --accent-subtle: rgba(255, 255, 255, 0.1);
+    --spotlight: rgba(255, 255, 255, 0.05);
+    --grid: rgba(255, 255, 255, 0.05);
+    --particle: rgba(255, 255, 255, 0.3);
+    --chart-line: #ffffff;
+    --chart-fill: rgba(255, 255, 255, 0.1);
+    --skill-card-bg: #0d0d0d;
+    --skill-pill-bg: #1a1a1a;
+    --skill-pill-border: #333333;
+    --nav-bg: rgba(0, 0, 0, 0.75);
+  }
+
+  [data-theme="cyberpunk"] {
+    --background: #06080c;
+    --surface: #0c1018;
+    --border: #0d2a1f;
+    --foreground: #b0ffcc;
+    --muted: #2a6644;
+    --accent: #00ff88;
+    --accent-subtle: rgba(0, 255, 136, 0.15);
+    --spotlight: rgba(0, 255, 136, 0.08);
+    --grid: rgba(0, 255, 136, 0.06);
+    --particle: rgba(0, 255, 136, 0.4);
+    --chart-line: #00ff88;
+    --chart-fill: rgba(0, 255, 136, 0.15);
+    --skill-card-bg: #0c1018;
+    --skill-pill-bg: #061a12;
+    --skill-pill-border: #0d2a1f;
+    --nav-bg: rgba(6, 8, 12, 0.75);
+  }
+
+  [data-theme="forest"] {
+    --background: #080e08;
+    --surface: #0e160e;
+    --border: #1a2e1a;
+    --foreground: #c8dcc8;
+    --muted: #4a6a4a;
+    --accent: #6abf6a;
+    --accent-subtle: rgba(106, 191, 106, 0.15);
+    --spotlight: rgba(106, 191, 106, 0.08);
+    --grid: rgba(106, 191, 106, 0.06);
+    --particle: rgba(106, 191, 106, 0.3);
+    --chart-line: #6abf6a;
+    --chart-fill: rgba(106, 191, 106, 0.15);
+    --skill-card-bg: #0e160e;
+    --skill-pill-bg: #122012;
+    --skill-pill-border: #1a2e1a;
+    --nav-bg: rgba(8, 14, 8, 0.75);
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased transition-colors duration-500 selection:bg-accent selection:text-background;
+  }
+
+  /* Custom focus ring */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-accent ring-offset-2 ring-offset-background;
+  }
+}
+
+/* Theme specific skill card styles */
+[data-theme="aeronautical"] .skill-card {
+  @apply border-border border border-dashed;
+  background-image: linear-gradient(0deg, transparent 24%, rgba(74, 158, 255, 0.03) 25%, rgba(74, 158, 255, 0.03) 26%, transparent 27%, transparent 74%, rgba(74, 158, 255, 0.03) 75%, rgba(74, 158, 255, 0.03) 76%, transparent 77%, transparent);
+  background-size: 50px 50px;
+}
+[data-theme="dark"] .skill-card {
+  @apply border-border border;
+}
+[data-theme="light"] .skill-card {
+  @apply bg-white shadow-sm border border-border;
+}
+[data-theme="midnight"] .skill-card {
+  @apply border-border border transition-all duration-300;
+}
+[data-theme="midnight"] .skill-card:hover {
+  box-shadow: 0 0 15px var(--accent-subtle);
+  border-color: var(--accent);
+}
+[data-theme="amoled"] .skill-card {
+  @apply border-transparent border transition-colors duration-300;
+}
+[data-theme="amoled"] .skill-card:hover {
+  @apply border-border;
+}
+[data-theme="cyberpunk"] .skill-card {
+  @apply border-border border transition-all duration-300;
+}
+[data-theme="cyberpunk"] .skill-card:hover {
+  @apply border-accent;
+  box-shadow: 0 0 8px var(--accent);
+}
+[data-theme="forest"] .skill-card {
+  @apply border-border border;
+}
+
